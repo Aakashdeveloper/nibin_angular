@@ -5,13 +5,14 @@ import { ProductFilterPipe } from "./product-filter.pipe";
 import { ProductService } from "./product.service";
 import { ProductDetail } from "./product-detail.compoment";
 import { SharedModule } from "../shared/shared.module";
+import { ProductDetailGaurd } from "./product-gaurd.service";
 
 @NgModule({
     imports:[
         SharedModule,
         RouterModule.forChild([
             {path:'products',component:ProductListComponent},
-            {path:'product/:id',component:ProductDetail},
+            {path:'product/:id',canActivate:[ProductDetailGaurd],component:ProductDetail},
         ])
 
     ],
@@ -20,7 +21,8 @@ import { SharedModule } from "../shared/shared.module";
             ProductFilterPipe,
             ProductDetail
     ],
-    providers:[ProductService]
+    providers:[ProductService,
+                ProductDetailGaurd]
 })
 
 export class  ProductModule{}
